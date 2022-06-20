@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<%- include('includes/head'); %> 
+  <body>
+    <%- include('includes/nav'); %>  <!-- This is the navbar -->
+    <div class="container mt-5">
+        <h1>Registro</h1>
+        <% if (message) {  %>
+          <div class="alert alert-success">
+            <%= message %>
+          </div>
+          <% } %>
+        
+    <form method="post" action="/register">
+        <div class="mb-3">
+            <label for="name" class="form-label">Nome<sup class="text-danger">*</sup></label>
+            <input type="text" class="form-control" id="name" name="name">
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">Endereço de Email<sup class="text-danger">*</sup></label>
+          <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp">
+          <div id="emailHelp" class="form-text">Nunca vamos compartilhar seu email com ninguem.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Senha</label>
+          <input type="password" name="password" class="form-control" id="password">
+        </div>
+
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+          <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+      
+    </form>
+    </div>
+      <%- include('includes/footer'); %> <!-- This is the footer -->
+  </body>
+</html>
