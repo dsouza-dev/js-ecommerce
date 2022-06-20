@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+require('./utils/db.config')
 
 app.set('view engine', 'ejs')
 
