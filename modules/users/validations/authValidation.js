@@ -17,6 +17,6 @@ const registerSchema = Joi.object({
     .lowercase()
     .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'in', 'br'] } })
 })
-  // .with('password', 'repeat_password')
+// .with('password', 'repeat_password')
 
 module.exports = { registerSchema }
