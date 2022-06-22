@@ -10,13 +10,13 @@ const registerSchema = Joi.object({
   password: Joi.string()
     .required(),
 
-  // repeat_password: Joi.ref('password'),
+  repeat_password: Joi.ref('password'),
 
   email: Joi.string()
     .trim()
     .lowercase()
     .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'in', 'br'] } })
 })
-// .with('password', 'repeat_password')
+  .with('password', 'repeat_password')
 
 module.exports = { registerSchema }
