@@ -7,7 +7,7 @@ const passport = require('passport')
 const guestMiddleware = require('../middlewares/guestMiddleware')
 
 router.get('/register', guestMiddleware, (req, res) => {
-  return res.render('register', { message: {}, formData: {}, errors: {} })
+  return res.render('register')
 })
 
 router.post('/register', async (req, res) => {
@@ -33,7 +33,6 @@ router.post('/register', async (req, res) => {
         type: 'success',
         body: 'Registrado com sucesso!'
       },
-      errors: {},
       formData: req.body
     })
   } catch (e) {
@@ -50,7 +49,7 @@ router.post('/register', async (req, res) => {
 })
 
 router.get('/login', guestMiddleware, (req, res) => {
-  return res.render('login', { message: {}, formData: {}, errors: {} })
+  return res.render('login')
 })
 
 router.post('/login', passport.authenticate('local', {
@@ -62,9 +61,7 @@ router.post('/login', passport.authenticate('local', {
     message: {
       type: 'success',
       body: 'Logado com sucesso'
-    },
-    formData: {},
-    errors: {}
+    }
   })
 })
 
