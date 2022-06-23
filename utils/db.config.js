@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
-mongoose.connect('mongodb+srv://daniel:1234@s-xstore.tlsvs.mongodb.net/?retryWrites=true&w=majority', {
+const mongoURI = 'mongodb+srv://daniel:1234@s-xstore.tlsvs.mongodb.net/?retryWrites=true&w=majority'
+mongoose.connect(mongoURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
@@ -8,3 +9,5 @@ mongoose.connect('mongodb+srv://daniel:1234@s-xstore.tlsvs.mongodb.net/?retryWri
 mongoose.connection.once('open', () => {
   console.log('Database is connected')
 })
+
+module.exports = mongoURI
