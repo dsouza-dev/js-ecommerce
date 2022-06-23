@@ -3,6 +3,7 @@ const router = express.Router()
 const { addUser } = require('../modules/users/service/userService')
 const { registerSchema } = require('../modules/users/validations/authValidation')
 const { joiErrorFormatter, mongooseErrorFormatter } = require('../utils/validationFormatter')
+const passport = require('passport')
 
 router.get('/register', (req, res) => {
   return res.render('register', { message: {}, formData: {}, errors: {} })
@@ -51,7 +52,11 @@ router.get('/login', (req, res) => {
   return res.render('login', { message: {}, formData: {}, errors: {} })
 })
 
-router.post('/login', (req, res) => {
+router.post('/login', passport.authenticate('local', {
+  successRedirect: '/login-success',
+  failureRedirect: '/login-failure',
+  failureFlash: true
+}), (req, res) => {
   return res.render('login', {
     message: {
       type: 'success',

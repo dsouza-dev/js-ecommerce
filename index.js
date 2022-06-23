@@ -1,7 +1,9 @@
 const express = require('express')
 const session = require('express-session')
 const bodyParser = require('body-parser')
+const passport = require('passport')
 require('./utils/db.config')
+require('./utils/authStrategies/localStrategy')
 
 const authRoutes = require('./routes/authRoutes')
 const app = express()
@@ -15,12 +17,14 @@ app.use(session({
   saveUninitialized: true,
   cookie: { secure: false }
 }))
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.use('/', authRoutes)
 
 app.get('/', (req, res) => {
   req.session.views = (req.session.views || 0) + 1
-  console.log(`Você visitou ${req.session.views} vezes`)
+  console.log('User: ', req.user)
 
   return res.render('index')
 })
