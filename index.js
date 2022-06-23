@@ -6,7 +6,7 @@ const bodyParser = require('body-parser')
 const passport = require('passport')
 require('./utils/db.config')
 require('./utils/authStrategies/localStrategy')
-
+const authMiddleware = require('./middlewares/authMiddleware')
 const authRoutes = require('./routes/authRoutes')
 const app = express()
 
@@ -26,10 +26,12 @@ app.use(passport.session())
 app.use('/', authRoutes)
 
 app.get('/', (req, res) => {
-  req.session.views = (req.session.views || 0) + 1
   console.log('User: ', req.user)
-
   return res.render('index')
+})
+
+app.get('/homepage', authMiddleware, (req, res) => {
+  res.send(`bem vindo ${req.user.name}`)
 })
 
 app.listen(3000, () => {
