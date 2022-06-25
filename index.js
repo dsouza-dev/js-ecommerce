@@ -24,6 +24,7 @@ app.use(session({
 app.use(logger('dev'))
 app.use(passport.initialize())
 app.use(passport.session())
+app.use(express.static('public'))
 app.locals.message = {}
 app.locals.formData = {}
 app.locals.errors = {}
@@ -37,6 +38,10 @@ app.get('/', (req, res) => {
 
 app.get('/homepage', authMiddleware, (req, res) => {
   res.send(`bem vindo ${req.user.name}`)
+})
+
+app.use((req, res, next) => {
+  res.status(404).render('404')
 })
 
 app.listen(3000, () => {
