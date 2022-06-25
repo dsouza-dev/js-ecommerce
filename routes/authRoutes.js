@@ -51,21 +51,46 @@ router.post('/register', async (req, res) => {
   }
 })
 
-router.get('/login', guestMiddleware, (req, res) => {
+router.get('/login', guestMiddleware, flasherMiddlware, (req, res) => {
   return res.render('login')
 })
 
-router.post('/login', passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/login',
-  failureFlash: true
-}), (req, res) => {
-  return res.render('login', {
-    message: {
-      type: 'success',
-      body: 'Logado com sucesso'
+router.post('/login', guestMiddleware, (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) {
+      console.error('Err:', err)
+      req.session.flashData = {
+        message: {
+          type: 'error',
+          body: 'Ocorreu um erro'
+        }
+      }
+      return res.redirect('/login')
     }
-  })
+
+    if (!user) {
+      req.session.flashData = {
+        message: {
+          type: 'error',
+          body: info.error
+        }
+      }
+      return res.redirect('/login')
+    }
+
+    req.logIn(user, (err) => {
+      if (err) {
+        console.error('Err:', err)
+        req.session.flashData = {
+          message: {
+            type: 'error',
+            body: 'Ocorreu um erro'
+          }
+        }
+      }
+      return res.redirect('/homepage')
+    })
+  })(req, res, next)
 })
 
 router.get('/logout', authMiddleware, (req, res, next) => {
