@@ -30,13 +30,14 @@ router.post('/register', async (req, res) => {
     }
     // eslint-disable-next-line no-unused-vars
     const user = await addUser(req.body)
-    return res.render('register', {
+    req.session.flashData = {
       message: {
         type: 'success',
         body: 'Registrado com sucesso!'
       },
       formData: req.body
-    })
+    }
+    return res.redirect('/register')
   } catch (e) {
     console.error(e)
     return res.status(400).render('register', {
