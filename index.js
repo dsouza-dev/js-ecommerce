@@ -3,6 +3,7 @@ const session = require('express-session')
 const MongoStore = require('connect-mongo')
 const mongoURI = require('./utils/db.config')
 const bodyParser = require('body-parser')
+const logger = require('morgan')
 const passport = require('passport')
 require('./utils/db.config')
 require('./utils/authStrategies/localStrategy')
@@ -20,6 +21,7 @@ app.use(session({
   cookie: { secure: false },
   store: MongoStore.create({ mongoUrl: mongoURI })
 }))
+app.use(logger('dev'))
 app.use(passport.initialize())
 app.use(passport.session())
 app.locals.message = {}
