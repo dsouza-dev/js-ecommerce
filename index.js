@@ -1,7 +1,7 @@
+require('dotenv').config()
 const express = require('express')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')
-const mongoURI = require('./utils/db.config')
 const bodyParser = require('body-parser')
 const logger = require('morgan')
 const passport = require('passport')
@@ -10,6 +10,7 @@ require('./utils/authStrategies/localStrategy')
 const authMiddleware = require('./middlewares/authMiddleware')
 const authRoutes = require('./routes/authRoutes')
 const app = express()
+const config = require('./utils/config')
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.set('view engine', 'ejs')
@@ -19,7 +20,7 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
   cookie: { secure: false },
-  store: MongoStore.create({ mongoUrl: mongoURI })
+  store: MongoStore.create({ mongoUrl: config.mongoUrl })
 }))
 app.use(logger('dev'))
 app.use(passport.initialize())
@@ -44,8 +45,8 @@ app.use((req, res, next) => {
   res.status(404).render('404')
 })
 
-app.listen(3000, () => {
-  console.log('Server is running on port 3000')
+app.listen(config.port, () => {
+  console.log(`Server is running on port ${config.port}`)
 })
 
 module.exports = app
