@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable n/handle-callback-err */
 const chai = require('chai')
 const chaiHttp = require('chai-http')
 const app = require('../index')
@@ -6,24 +8,14 @@ const app = require('../index')
 chai.use(chaiHttp)
 chai.should()
 
-describe('ter certeza que o status é 200', () => {
-  it('deve retornar status 200', (done) => {
+describe('ter certeza que o servidor esta rodando', () => {
+  it('deve retornar uma página com o status 200', (done) => {
     chai.request(app)
-  	  .get('/')
+      .get('/')
       .end((err, res) => {
-          res.should.have.status(200)
-          res.should.be.a('object')
-          done()        })
-  })
-}) // fim do it
-
-describe('ter certeza que o registro vai falhar', () => {
-  it('deve retornar status 400', (done) => {
-    chai.request(app)
-  	  .post('/register')
-      .end((err, res) => {
-          res.should.have.status(400)
-          // res.should.be.a('object')
-          done()        })
+        if (err) return done(err)
+        res.should.have.status(200)
+        done()
+      })
   })
 }) // fim do it

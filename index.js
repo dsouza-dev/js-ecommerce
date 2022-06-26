@@ -36,7 +36,7 @@ app.locals.errors = {}
 app.use('/', authRoutes)
 
 app.get('/', (req, res) => {
-  console.log('User: ', req.user)
+  // console.log('User: ', req.user)
   return res.render('index')
 })
 
