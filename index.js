@@ -1,16 +1,19 @@
 require('dotenv').config()
+require('./utils/db.config')
+require('./utils/authStrategies/localStrategy')
+
 const express = require('express')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')
 const bodyParser = require('body-parser')
 const logger = require('morgan')
 const passport = require('passport')
-require('./utils/db.config')
-require('./utils/authStrategies/localStrategy')
+
 const authMiddleware = require('./middlewares/authMiddleware')
 const authRoutes = require('./routes/authRoutes')
-const app = express()
 const config = require('./utils/config')
+
+const app = express()
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.set('view engine', 'ejs')

@@ -31,6 +31,11 @@ const userSchema = mongoose.Schema({
   timestamps: true
 })
 
+userSchema.path('email').validate(async (email) => {
+  const emailCount = await mongoose.models.user.countDocuments({ email })
+  return !emailCount
+}, 'Email já cadastrado!')
+
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) next()
   this.password = await bcrypt.hash(this.password, 10)
