@@ -16,8 +16,9 @@ const config = require('./utils/config')
 const app = express()
 
 app.use(bodyParser.urlencoded({ extended: false }))
+
 app.set('view engine', 'pug')
-// app.set('trust proxy', 1)
+
 app.use(session({
   secret: 'fcd6a5c874758d532f8b737b34e95fc9945763d4',
   resave: false,
@@ -25,10 +26,19 @@ app.use(session({
   cookie: { secure: false },
   store: MongoStore.create({ mongoUrl: config.mongoUrl })
 }))
+
 app.use(logger('dev'))
+
 app.use(passport.initialize())
 app.use(passport.session())
+
 app.use(express.static('public'))
+
+app.use((req, res, next) => {
+  res.locals.user = req.isAuthenticated() ? req.user : null
+  return next()
+})
+
 app.locals.message = {}
 app.locals.formData = {}
 app.locals.errors = {}
