@@ -1,4 +1,4 @@
-extends partials/layout
+extends ../master/default/layout
 block content
   .container.mt-5
     h1 Registration
@@ -15,7 +15,7 @@ block content
           type='text',
           name='name',
           maxlength='64',
-          minlength='3'
+          minlength='2'
           required
         )
         +err(errors.name)

@@ -9,6 +9,7 @@ const bodyParser = require('body-parser')
 const logger = require('morgan')
 const passport = require('passport')
 
+const flasherMiddleware = require('./middlewares/flasherMiddleware')
 const authMiddleware = require('./middlewares/authMiddleware')
 const authRoutes = require('./routes/authRoutes')
 const config = require('./utils/config')
@@ -39,19 +40,19 @@ app.use((req, res, next) => {
   return next()
 })
 
+app.locals.title = 'X Store'
 app.locals.message = {}
 app.locals.formData = {}
 app.locals.errors = {}
 
 app.use('/', authRoutes)
 
-app.get('/', (req, res) => {
-  // console.log('User: ', req.user)
+app.get('/', flasherMiddleware, (req, res) => {
   return res.render('index')
 })
 
 app.get('/homepage', authMiddleware, (req, res) => {
-  res.render('dashboard')
+  return res.render('dashboard')
 })
 
 app.use((req, res, next) => {
@@ -59,7 +60,7 @@ app.use((req, res, next) => {
 })
 
 app.listen(config.port, () => {
-  console.log(`Server is running on port ${config.port}`)
+  console.log(`Server is running on: http://localhost:${config.port}`)
 })
 
 module.exports = app

@@ -1,15 +1,20 @@
 const express = require('express')
+const passport = require('passport')
+
 const router = express.Router()
+
 const { addUser } = require('../modules/users/service/userService')
 const { registerSchema } = require('../modules/users/validations/authValidation')
 const { joiErrorFormatter, mongooseErrorFormatter } = require('../utils/validationFormatter')
-const passport = require('passport')
+
 const guestMiddleware = require('../middlewares/guestMiddleware')
 const authMiddleware = require('../middlewares/authMiddleware')
 const flasherMiddlware = require('../middlewares/flasherMiddleware')
 
 router.get('/register', guestMiddleware, flasherMiddlware, (req, res) => {
-  return res.render('register')
+  return res.render('auth/register', {
+    title: 'Registro'
+  })
 })
 
 router.post('/register', async (req, res) => {
@@ -40,7 +45,7 @@ router.post('/register', async (req, res) => {
     return res.redirect('/register')
   } catch (e) {
     // console.error(e)
-    return res.status(400).render('register', {
+    return res.status(400).render('auth/register', {
       message: {
         type: 'error',
         body: 'Erro na validação'
@@ -52,7 +57,9 @@ router.post('/register', async (req, res) => {
 })
 
 router.get('/login', guestMiddleware, flasherMiddlware, (req, res) => {
-  return res.render('login')
+  return res.render('auth/login', {
+    title: 'Entrar'
+  })
 })
 
 router.post('/login', guestMiddleware, (req, res, next) => {
