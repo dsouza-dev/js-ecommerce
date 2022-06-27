@@ -41,7 +41,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/homepage', authMiddleware, (req, res) => {
-  res.send(`bem vindo ${req.user.name}`)
+  res.render('dashboard')
 })
 
 app.use((req, res, next) => {

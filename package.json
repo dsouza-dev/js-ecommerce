@@ -6,6 +6,7 @@
   "scripts": {
     "serve:local": "nodemon index.js",
     "test": "mocha tests/*.js --exit",
+    "test:chrome": "node test_browser/index.js",
     "lint": "eslint ./*.js",
     "lint:fix": "eslint --fix ./*.js"
   },

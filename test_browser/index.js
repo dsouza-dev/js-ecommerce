@@ -24,7 +24,7 @@ const test = async (viewPort) => {
   const browser = await puppeteer.launch({
     headless: false, // Opens a chrome in UI
     slowMo: slowMoTime, // Runs tests in slow motion
-    executablePath: '/usr/bin/google-chrome', // Chrome location in your system,
+    executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
     args: [`--window-size=${viewPort.width},${viewPort.height}`]
   })
   const page = await browser.newPage() // New Tab
